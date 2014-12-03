@@ -10,7 +10,7 @@ phonecatApp.config(function($routeProvider) {
         templateUrl: 'partials/a.html',
         controller: 'aCtrl'
       }).
-      when('/b', {
+      when('/details/:sortieid?', {
         templateUrl: 'partials/b.html',
         controller: 'bCtrl'
       }).
@@ -24,7 +24,8 @@ phonecatApp.controller('aCtrl', function($scope) {
     $scope.message = 'Everyone come and see how good I look!';
 });
 
-phonecatApp.controller('bCtrl', function($scope) {
+phonecatApp.controller('bCtrl', function($scope, $routeParams) {
+    alert($routeParams.sortieid);
     $scope.message = 'Look! I am an about page.';
 });
 
