@@ -1,0 +1,66 @@
+<!doctype html>
+<html ng-app="project">
+ <head>
+   <meta charset="utf-8">
+   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+   <script src="calendrier.js"></script>
+   
+   <style type="text/css">
+     tr.sortie {background-color:white; font-weight:bold}
+     tr.evenement {background-color:#CCFFFF; font-weight:bold}
+     tr.stage {background-color:#CCCCCC; font-weight:bold}
+     tr.selection {background-color:#66FFFF; font-weight:bold; cursor:pointer}
+  </style> 
+  
+  </head>
+  <body>
+  <!-- Début Partie ajoutée pour navigation -->
+  <form name="myForm" action="details.pl" method="GET">
+    <input type="hidden" name="filtre">
+    <input type="hidden" name="id">
+  </form>
+  
+  <script language="javascript">
+  
+  function details(id)
+  {
+    myForm.id.value = id;
+    myForm.submit();
+  }
+    ;
+  </script>
+  
+	<div ng-controller="ListCtrl">
+	<h2>Calendrier {{sorties.anne}}</h2>
+    
+    <table border="1">
+    <th>id, res_adultes, reservation</th>
+    <th>nom</th><th>Debut</th><th>Fin</th>
+    <th>description</th>
+    
+    <th>Distance de Mtl</th><th>longueur</th><th>difficulte</th>
+    <th>camping</th><th>Responsable</th>
+    <tr ng-repeat="s in sorties.sorties" ng-init="s.over=s.type;" ng-class="s.over" ng-mouseover="s.over='selection';" ng-mouseleave="s.over=s.type;" >
+
+        <td>{{s.id}} {{s.reservation}}
+            <img ng-if="s.res_adultes" src="http://www.portageurs.qc.ca/images/crochet3.gif" width="10" height="13">
+        </td>
+        <td>{{s.nom}}</td>
+        <td>{{s.debut}}</td>
+        <td>{{s.fin}}</td>
+        <td>{{s.description}}</td>
+        
+        <td>{{s.distance_mtl}}</td>
+        <td>{{s.longueur}}</td>
+        <td>{{s.difficulte}}</td>
+        <td>{{s.camping}}</td>
+        <td>{{s.responsable}}</td>
+    </tr>
+    </table>
+
+    <hr />
+    JSON equivalent:<br/>
+    <pre>{{ sorties | json }}</pre>
+	</div>
+  </body>
+</html>
