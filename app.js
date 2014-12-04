@@ -6,26 +6,40 @@ var phonecatApp = angular.module('phonecatApp', ['ngRoute']);
 
 phonecatApp.config(function($routeProvider) {
     $routeProvider.
-      when('/a', {
-        templateUrl: 'partials/a.html',
+      when('/', {
+        templateUrl: 'partials/liste.html',
         controller: 'aCtrl'
       }).
       when('/details/:sortieid?', {
-        templateUrl: 'partials/b.html',
+        templateUrl: 'partials/details.html',
         controller: 'bCtrl'
       }).
       otherwise({
-        redirectTo: '/a'
+        redirectTo: '/'
       });
   });
 
 // create the controller and inject Angular's $scope
-phonecatApp.controller('aCtrl', function($scope) {
-    $scope.message = 'Everyone come and see how good I look!';
+phonecatApp.controller('aCtrl', function($scope, $http) {
+  $scope.message = 'Everyone come and see how good I look!';
+  $http.get('http://www.portageurs.qc.ca/cgi-bin/calendrierjson.pl').success(function(data) {
+    $scope.sorties = data;
+  }).error(function(data, status, headers, config) {
+      alert(status);
+      $scope.sorties['status'] = status;
+      $scope.sorties['headers'] = headers;
+      $scope.sorties['data'] = data;
+  });
+  
+  $scope.select_sortie = function(){
+    $http.get('http://www.portageurs.qc.ca/cgi-bin/calendrierjson.pl?id='+$scope.id_edit).success(function(data) {
+      $scope.sortie = data;
+    });
+  }
 });
 
 phonecatApp.controller('bCtrl', function($scope, $routeParams) {
-    alert($routeParams.sortieid);
+    $scope.sortieid = $routeParams.sortieid;
     $scope.message = 'Look! I am an about page.';
 });
 
