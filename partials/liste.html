@@ -34,7 +34,7 @@ myForm.submit();
     
     <th>Distance de Mtl</th><th>longueur</th><th>difficulte</th>
     <th>camping</th><th>Responsable</th>
-    <tr ng-repeat="s in sorties.sorties" ng-init="s.over=s.type;" ng-class="s.over" ng-mouseover="s.over='selection';" ng-mouseleave="s.over=s.type;" >
+    <tr ng-repeat="s in sorties.sorties" ng-init="s.over=s.type;" ng-class="s.over" ng-mouseover="s.over='selection';" ng-mouseleave="s.over=s.type;" ng-click="go(s.id)">
 
         <td>{{s.id}} {{s.reservation}}
             <img ng-if="s.res_adultes" src="http://www.portageurs.qc.ca/images/crochet3.gif" width="10" height="13">

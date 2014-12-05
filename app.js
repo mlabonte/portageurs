@@ -20,10 +20,12 @@ phonecatApp.config(function($routeProvider) {
   });
 
 // create the controller and inject Angular's $scope
-phonecatApp.controller('aCtrl', function($scope, $http) {
-  $scope.message = 'Everyone come and see how good I look!';
+phonecatApp.controller('aCtrl', function($scope, $http, $location) {
   $http.get('http://www.portageurs.qc.ca/cgi-bin/calendrierjson.pl').success(function(data) {
     $scope.sorties = data;
+    $scope.go = function(id_sortie){
+        $location.path( "/details/" + id_sortie );
+    };
   }).error(function(data, status, headers, config) {
       alert(status);
       $scope.sorties['status'] = status;
@@ -38,8 +40,8 @@ phonecatApp.controller('aCtrl', function($scope, $http) {
   }
 });
 
-phonecatApp.controller('bCtrl', function($scope, $routeParams) {
-    $scope.sortieid = $routeParams.sortieid;
-    $scope.message = 'Look! I am an about page.';
+phonecatApp.controller('bCtrl', function($scope, $routeParams, $sce) {
+    var url = "http://www.portageurs.qc.ca/cgi-bin/details.pl?id=" + $routeParams.sortieid;
+    $scope.sortieUrl = $sce.trustAsResourceUrl(url);
 });
 
