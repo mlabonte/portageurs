@@ -19,10 +19,29 @@ phonecatApp.config(function($routeProvider) {
       });
   });
 
+function transformer_sortie(sortie){
+    var desc = sortie["description"];
+    if( !sortie["endroit"] ){
+        sortie["endroit"] = desc;
+        sortie["description"] = "";
+    }
+    if( desc && desc.indexOf("href")>0 ){
+        sortie["description"] = "";
+    }
+    return sortie;
+}
+  
 // create the controller and inject Angular's $scope
 phonecatApp.controller('aCtrl', function($scope, $http, $location) {
   $http.get('http://www.portageurs.qc.ca/cgi-bin/calendrierjson.pl').success(function(data) {
-    $scope.sorties = data;
+    var sorties = [];
+    for(var i=0; i<data["sorties"].length; i++){
+        var sortie = data["sorties"][i];
+        sortie = transformer_sortie(sortie);
+        sorties.push(sortie);
+    }
+
+    $scope.sorties = {"sorties": sorties};
     $scope.go = function(id_sortie){
         $location.path( "/details/" + id_sortie );
     };
@@ -32,12 +51,6 @@ phonecatApp.controller('aCtrl', function($scope, $http, $location) {
       $scope.sorties['headers'] = headers;
       $scope.sorties['data'] = data;
   });
-  
-  $scope.select_sortie = function(){
-    $http.get('http://www.portageurs.qc.ca/cgi-bin/calendrierjson.pl?id='+$scope.id_edit).success(function(data) {
-      $scope.sortie = data;
-    });
-  }
 });
 
 phonecatApp.controller('bCtrl', function($scope, $routeParams, $sce) {

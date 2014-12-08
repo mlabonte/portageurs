@@ -1,58 +1,53 @@
-
-   
+﻿
 <style type="text/css">
  tr.sortie {background-color:white; font-weight:bold}
  tr.evenement {background-color:#CCFFFF; font-weight:bold}
  tr.stage {background-color:#CCCCCC; font-weight:bold}
  tr.selection {background-color:#66FFFF; font-weight:bold; cursor:pointer}
+ tr.headers {height: 25px; align:center border-color:#FFFFFF; background-color: #00AF00; color: #FFFFFF}
 </style> 
 
-
-<!-- Début Partie ajoutée pour navigation -->
-<form name="myForm" action="details.pl" method="GET">
-<input type="hidden" name="filtre">
-<input type="hidden" name="id">
-</form>
-
-<script language="javascript">
-
-function details(id)
-{
-myForm.id.value = id;
-myForm.submit();
-}
-
-</script>
   
 <div>
 	<h2>Calendrier {{sorties.anne}}</h2>
     
-    <table border="1">
-    <th>id, res_adultes, reservation</th>
-    <th>nom</th><th>Debut</th><th>Fin</th>
-    <th>description</th>
-    
-    <th>Distance de Mtl</th><th>longueur</th><th>difficulte</th>
-    <th>camping</th><th>Responsable</th>
+    <table border="0">
+        <tr class="headers">
+        <th></th><th>Date</th>
+        <th>Parcours/Événement</th><th>Endroit</th><th>Description</th>
+        <th>N.</th><th>C.</th><th>L.</th><th>D.</th>
+        <th>Responsable</th>
+    </tr>
     <tr ng-repeat="s in sorties.sorties" ng-init="s.over=s.type;" ng-class="s.over" ng-mouseover="s.over='selection';" ng-mouseleave="s.over=s.type;" ng-click="go(s.id)">
 
-        <td>{{s.id}} {{s.reservation}}
+        <td>{{s.reservation}}
             <img ng-if="s.res_adultes" src="http://www.portageurs.qc.ca/images/crochet3.gif" width="10" height="13">
         </td>
+        <td>{{s.date_txt}}</td>
         <td>{{s.nom}}</td>
-        <td>{{s.debut}}</td>
-        <td>{{s.fin}}</td>
-        <td>{{s.description}}</td>
         
-        <td>{{s.distance_mtl}}</td>
-        <td>{{s.longueur}}</td>
+        <td ng-if="s.description">{{s.endroit}}</td>
+        <td ng-if="s.description">{{s.description}}</td>
+        <td ng-if="!s.description" colspan="2">{{s.endroit}}</td>
+        
         <td>{{s.difficulte}}</td>
         <td>{{s.camping}}</td>
+        <td>{{s.longueur}}</td>
+        <td>{{s.distance_mtl}}</td>
         <td>{{s.responsable}}</td>
     </tr>
     </table>
 
-    <hr />
-    JSON equivalent:<br/>
-    <pre>{{ sorties | json }}</pre>
+    <!-- pre>{{ sorties | json }}</pre -->
+    
+    <p>
+    LÉGENDE : <br/>
+    N. (Niveau de difficulté): F=Facile, M=Moyen, D=Difficile, TD=Très difficile <br/>
+    C. (Camping): Fixe ou Mobile <br/>
+    L. : Longueur en km du parcours <br/>
+    D. : Distance en km du local <br/>
+    * Activité en territoire contingenté requérant une réservation payable d’avance. Contacter le responsable au minimum 3 semaines avant la sortie pour les détails <br/>
+    ** Réservation obligatoire et paiement 30 jours avant le stage. Les réunions préparatoires aux stages ont lieu généralement deux (2) mercredis précédant le stage <br/>
+    <img src="http://www.portageurs.qc.ca/images/crochet3.gif" width="10" height="13"> Activité entre adultes seulement
+    </p>
 </div>
