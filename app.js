@@ -33,7 +33,7 @@ function transformer_sortie(sortie){
   
 // create the controller and inject Angular's $scope
 phonecatApp.controller('aCtrl', function($scope, $http, $location) {
-  $http.get('http://www.portageurs.qc.ca/cgi-bin/calendrierjson.pl').success(function(data) {
+  $http.get('//www.portageurs.qc.ca/cgi-bin/calendrierjson.pl').success(function(data) {
     var sorties = [];
     for(var i=0; i<data["sorties"].length; i++){
         var sortie = data["sorties"][i];
@@ -54,7 +54,7 @@ phonecatApp.controller('aCtrl', function($scope, $http, $location) {
 });
 
 phonecatApp.controller('bCtrl', function($scope, $routeParams, $sce) {
-    var url = "http://www.portageurs.qc.ca/cgi-bin/details.pl?id=" + $routeParams.sortieid;
+    var url = "//www.portageurs.qc.ca/cgi-bin/details.pl?id=" + $routeParams.sortieid;
     $scope.sortieUrl = $sce.trustAsResourceUrl(url);
 });
 
