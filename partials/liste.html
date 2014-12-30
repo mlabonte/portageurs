@@ -11,7 +11,12 @@
   
 <div>
 	<h2>Calendrier {{sorties.annee}}</h2>
-    
+    Filtres: 
+    <input type="radio" ng-model="filtre_type" value="" ng-checked="true">Aucun</input>
+    <input type="radio" ng-model="filtre_type" value="sortie">Sorties</input>
+    <input type="radio" ng-model="filtre_type" value="expedition">Expédition</input>
+    <input type="radio" ng-model="filtre_type" value="evenement">Événements</input>
+    <input type="radio" ng-model="filtre_type" value="stage">Stages</input>
     <table border="0">
         <tr class="headers">
             <th></th><th>Date</th>
@@ -23,7 +28,7 @@
             <tr class="mois">
                 <td colspan="12">{{m.nom}}</td>
             </tr>
-            <tr ng-repeat="s in m.sorties | filter : s.type : filtre_type" ng-init="s.over=s.type;" ng-class="s.over" ng-mouseover="s.over='selection';" ng-mouseleave="s.over=s.type;" ng-click="go(s.id)">
+            <tr ng-repeat="s in m.sorties | filter:{type:filtre_type}" ng-init="s.over=s.type;" ng-class="s.over" ng-mouseover="s.over='selection';" ng-mouseleave="s.over=s.type;" ng-click="go(s.id)">
                 <td width="12">{{s.reservation}}
                     <img ng-if="s.res_adultes" src="http://www.portageurs.qc.ca/images/crochet3.gif" width="10" height="13">
                 </td>

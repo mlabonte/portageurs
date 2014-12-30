@@ -60,10 +60,6 @@ calendrierApp.controller('listeCtrl', function($scope, $http, $location) {
     $scope.go = function(id_sortie){
         $location.path( "/details/" + id_sortie );
     };
-    $scope.filtre_type = function(actual, expected){
-        //alert(actual);
-        return true;
-    }
   }).error(function(data, status, headers, config) {
       alert(status);
       $scope.sorties['status'] = status;
